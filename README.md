@@ -31,10 +31,10 @@ This repository houses **all code** required to reproduce the experiments in the
 ## 3 · Citation
 
 ```bibtex
-@article{wang2025geolstm,
-  author  = {Wang, Zhongying and Karimzadeh, Morteza and Crooks, James L.},
-  title   = {Performance and Generalizability Impacts of Incorporating Geolocation into Deep Learning for Dynamic PM2.5 Estimation},
-  journal = {arXiv preprint arXiv:2505.18461},
-  year    = {2025}
+@article{karimzadeh2025performance,
+  title={Performance and Generalizability Impacts of Incorporating Geolocation into Deep Learning for Dynamic PM2. 5 Estimation},
+  author={Karimzadeh, Morteza and Wang, Zhongying and Crooks, James L},
+  journal={arXiv preprint arXiv:2505.18461},
+  year={2025}
 }
 ```
