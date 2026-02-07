@@ -9,7 +9,6 @@
 > **Code base:** Fork/extension of [`geohai/PM2.5_CONUS_LSTM`](https://github.com/geohai/PM2.5_CONUS_LSTM)
 > **Authors:** Morteza Karimzadeh · Zhongying Wang · James L. Crooks
 > **Status:** Published (2025)
-> **Last updated:** Feb 7, 2026
 
 ---
 
@@ -23,7 +22,7 @@ A central contribution is a **systematic evaluation of three ways to incorporate
 * **Pretrained location encoders (e.g., GeoCLIP)** can improve **both** accuracy and **geographic generalizability**, especially under rigorous spatial disjoint evaluation.
 * Embedding fusion effectively acts like **conditioning inference on geographic priors** (“what is typical about this place?”) while the dynamic inputs (AOD, met, smoke, etc.) capture **day-to-day variation**.
 
-![loc\_encoder\_fusion](docs/_static/Bi-LSTM_Fusion.png)
+![loc\_encoder\_fusion](https://res.cloudinary.com/dz3zgmhnr/image/upload/v1770494933/Bi-LSTM_Fusion_lz3ynz.png)
 
 ---
 
