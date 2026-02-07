@@ -1,3 +1,6 @@
+
+---
+
 # Performance and Generalizability Impacts of Incorporating Location Encoders into Deep Learning for Dynamic PM2.5 Estimation
 
 > **Paper (GIScience & Remote Sensing):** Performance and generalizability impacts of incorporating location encoders into deep learning for dynamic PM2.5 estimation
@@ -12,11 +15,11 @@
 
 ## 1 · Project summary
 
-This repository contains code to reproduce experiments from our paper on **how geolocation should be incorporated in deep learning** for a **temporally dynamic, spatially heterogeneous** geospatial task: **daily surface PM2.5 estimation** over CONUS using a strong Bi-LSTM + Attention baseline (remote sensing + meteorology + ancillary variables).
+This repository contains code to reproduce experiments from our paper on **how earth embeddings impact deep learning-based estimations** for a **temporally dynamic, spatially heterogeneous** geospatial task: **daily surface PM2.5 estimation** over CONUS using a strong Bi-LSTM + Attention baseline (remote sensing + meteorology + ancillary variables). Unlike many prior evaluations of Earth embeddings on relatively static or long-term averaged targets, this work focuses on a real-world estimation problem where the signal is highly dynamic and extreme values are important to be estimated for downstream tasks.
 
 A central contribution is a **systematic evaluation of three ways to incorporate location**, showing that:
 
-* **Raw coordinates can help within-region interpolation**, but often **hurt out-of-region generalization**.
+* **Naive raw coordinates can help within-region interpolation**, but often **hurt out-of-region generalization**.
 * **Pretrained location encoders (e.g., GeoCLIP)** can improve **both** accuracy and **geographic generalizability**, especially under rigorous spatial disjoint evaluation.
 * Embedding fusion effectively acts like **conditioning inference on geographic priors** (“what is typical about this place?”) while the dynamic inputs (AOD, met, smoke, etc.) capture **day-to-day variation**.
 
@@ -27,6 +30,8 @@ A central contribution is a **systematic evaluation of three ways to incorporate
 ## 2 · Why this matters: Earth embeddings as priors for dynamic inference
 
 Recent “**geospatial foundation models**” increasingly aim to learn reusable representations of the Earth. Location encoders like **GeoCLIP** and **SatCLIP** can be seen as producing **Earth embeddings**: a compact vector representation of a place derived from large-scale pretraining.
+
+Most existing evaluations of such Earth embeddings emphasize comparatively static or temporally smoothed prediction tasks (e.g., air temperature, biomass, land cover). It remains less clear how these static representations behave when embedded in dynamic estimation problems, where targets vary rapidly over time and rare extremes create the bulk of error, as important as they are.
 
 In our setting, those embeddings behave like a **static geographic prior**:
 
@@ -63,20 +68,21 @@ When test data are spatially in-distribution (random split; spatial holdout spli
 Under **checkerboard** spatial partitions (disjoint train/test regions), we find a clear pattern:
 
 * **Raw lat/lon (and sin/cos)** often *degrade* OoR generalization, consistent with models overfitting to region-specific location–target associations.
-* **GeoCLIP embeddings** (Earth embeddings) are consistently competitive and often best, because they provide transferable geographic context without letting the downstream model “cheat” via direct coordinates.
+* **GeoCLIP embeddings** (Earth embeddings) are consistently competitive and often best, because they provide transferable geographic context without letting the downstream model “cheat” via direct coordinates, even in highly dynamic settings.
 
 ### Fusion matters
 
 Ablations show:
 
 * **Hadamard fusion** outperforms concatenation for location encoders in this task.
+* This supports interpreting Hadamard fusion as a mechanism for **conditioning dynamic Earth-observation models on geographic priors**, rather than treating embeddings as independent predictors.
 * **GeoCLIP > SatCLIP** in our experiments, plausibly reflecting differences in what each encoder’s pretraining data captures (human-centric Flickr imagery vs. Sentinel-2 imagery).
 
 ### Qualitative behavior (important nuance)
 
 GeoCLIP-enhanced maps show:
 
-* Better spatial coherence in some sparsely monitored regions and stronger recovery of known urban hotspots and wildfire-related extremes,
+* Better spatial coherence in some sparsely monitored regions and better estimation of known urban hotspots and wildfire-related extremes, particularly at the **high-concentration tail** where deep learning models typically underperform,
 * But also potential artifact/noise patterns in some under-sampled regions—consistent with uneven upstream pretraining coverage + high-frequency basis functions in positional encoders.
 
 ---
@@ -100,7 +106,7 @@ GeoCLIP-enhanced maps show:
 
 ## 7 · Citation
 
-### APA (as shown on the journal page)
+### APA
 
 Karimzadeh, M., Wang, Z., & Crooks, J. L. (2025). *Performance and generalizability impacts of incorporating location encoders into deep learning for dynamic PM2.5 estimation.* **GIScience & Remote Sensing, 62(1)**. [https://doi.org/10.1080/15481603.2025.2594797](https://doi.org/10.1080/15481603.2025.2594797)
 
